@@ -53,3 +53,13 @@ put<T = any>(options: PostOrPutOptions): Promise<T>;
 delete<T = any>(options: RequestOptions): Promise<T>;
 cleanup?(): void;
 }
+interface IDecoratorConstructor<T> {
+  new (apiClient: IApiClient, params: T, baseClient: IApiClient): Decorator;
+}
+
+type DecoratorContainer<T = any> = {
+  decorator: IDecoratorConstructor<T>;
+  decoratorInstance?: any;
+  params?: T;
+};
+

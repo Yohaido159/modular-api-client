@@ -1,24 +1,3 @@
-type RequestOptions = {
-  url: string;
-  params?: object;
-  headers?: object;
-  [key: string]: any; // Other options
-};
-
-type PostOrPutOptions = RequestOptions & {
-  data?: any;
-};
-
-interface IDecoratorConstructor<T> {
-  new (apiClient: IApiClient, params: T, baseClient: IApiClient): Decorator;
-}
-
-type DecoratorContainer<T = any> = {
-  decorator: IDecoratorConstructor<T>;
-  decoratorInstance?: any;
-  params?: T;
-};
-
 export class ApiClient {
   private baseClient: any;
   private client: any;

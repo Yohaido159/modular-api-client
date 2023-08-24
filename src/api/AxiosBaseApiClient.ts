@@ -5,7 +5,7 @@ interface RequestOptions extends AxiosRequestConfig {
   data?: any;
 }
 
-export interface IAxiosBaseApiClient {
+interface IAxiosBaseApiClient {
   baseURL: string;
   instance: AxiosInstance;
 }

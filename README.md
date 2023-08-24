@@ -69,7 +69,7 @@ Custom decorators allow you to extend the core functionality of the API client a
 #### Implementing a Basic Custom Decorator
 
 ```ts
-// retry-decorator.js
+// retry.decorator.js
 import { Decorator } from "modular-api-client";
 
 export class RetryDecorator extends Decorator {
@@ -100,15 +100,15 @@ import { ApiClient, AxiosBaseApiClient } from "modular-api-client";
 
 const client = new ApiClient(new AxiosBaseApiClient("https://api.example.com"));
 client.addDecorator({ decorator: RetryDecorator, params: { retries: 3, delay: 1000 } });
-// this decorator apply only for the 'GET' method
-// This request will be retried 3 times with a 1 second delay between each attempt
-// if successful, the response will be returned
-// if unsuccessful after 3 attempts, the error will be thrown
+// if failed, will retry 3 times with a 1 second delay between each attempt
 client.get({ url: "/users/1" }).then((response) => {
   console.log(response);
 });
+```
 
-// this decorator apply for all methods
+#### Implementing a Custom Decorator for all methods
+
+```ts
 export class RetryDecorator extends Decorator {
     // ...
     all(method, options) {
