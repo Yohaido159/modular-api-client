@@ -6,5 +6,7 @@ module.exports = {
   transform: {
     '^.+\\.(js|ts)?$': 'ts-jest',
   },
-  // "transformIgnorePatterns": []
+  collectCoverage: true,
+  coverageReporters: ['json', 'lcov'],
 };
+// 66a51adc-df91-4944-8d90-1678c343d350

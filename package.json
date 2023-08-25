@@ -24,7 +24,9 @@
   ],
   "typings": "./src/index.d.ts",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "codecov": "codecov",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -47,6 +49,7 @@
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "axios-mock-adapter": "^1.21.5",
     "babel-jest": "^29.6.4",
+    "codecov": "^3.8.3",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.0",
     "eslint-plugin-import": "^2.28.1",
