@@ -1,7 +1,4 @@
-import MockAdapter from 'axios-mock-adapter';
-
 import { ApiClient } from '../src/api/apiClient';
-import { AxiosBaseApiClient, createAxiosInstance } from '../src/api/AxiosBaseApiClient';
 import { AuthenticationDecorator } from '../src/decorators/auth.decorator';
 import { AxiosDataDecorator } from '../src/decorators/data.decorator';
 import { LoggerDecorator } from '../src/decorators/logger.decorator';
@@ -13,14 +10,14 @@ const baseURL = 'https://jsonplaceholder.typicode.com';
 
 describe('ApiClient', () => {
   it(`should perform a GET POST PUT DELETE with decorator`, async () => {
-    const apiClient = new ApiClient(new AxiosBaseApiClient(baseURL));
-    const axiosInstance = apiClient.baseClient.instance;
-    const mock = new MockAdapter(axiosInstance);
-
-    mock.onGet('/posts').reply(200, [{ id: 1, title: 'foo' }]);
-    mock.onPost('/posts').reply(201, { id: 1, title: 'foo' });
-    mock.onPut('/posts/1').reply(200, { id: 1, title: 'foo' });
-    mock.onDelete('/posts/1').reply(200, { id: 1, title: 'foo' });
+    const apiClient = new ApiClient(
+      new MockAxiosBaseApiClient(baseURL, {
+        get: { data: [{ id: 1, title: 'foo' }] },
+        post: { data: { id: 1, title: 'foo' } },
+        put: { data: { id: 1, title: 'foo' } },
+        delete: { data: { id: 1, title: 'foo' } },
+      }),
+    );
 
     apiClient.addDecorator({ decorator: AxiosDataDecorator });
 
@@ -64,41 +61,48 @@ describe('ApiClient', () => {
   });
 
   it(`should perform a GET with versions decorator`, async () => {
-    const apiClient = new ApiClient(new AxiosBaseApiClient(baseURL));
-    const axiosInstance = apiClient.baseClient.instance;
-    const mock = new MockAdapter(axiosInstance);
-
-    mock.onGet('/posts').reply(200, [{ id: 1, title: 'foo' }]);
-    mock.onPost('/posts').reply(201, { id: 1, title: 'foo' });
-    mock.onPut('/posts/1').reply(200, { id: 1, title: 'foo' });
-    mock.onDelete('/posts/1').reply(200, { id: 1, title: 'foo' });
-
+    const apiClient = new ApiClient(
+      new MockAxiosBaseApiClient(baseURL, {
+        get: { data: [{ id: 1, title: 'foo' }] },
+        post: { data: { id: 1, title: 'foo' } },
+        put: { data: { id: 1, title: 'foo' } },
+        delete: { data: { id: 1, title: 'foo' } },
+      }),
+    );
     apiClient.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
 
-    const responseGet = await apiClient.get({ url: '/posts' });
-    expect(responseGet.config.baseURL).toEqual(`${baseURL}/v1`);
+    await apiClient.get({ url: '/posts' });
+    expect(apiClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {
+      baseURL: 'https://jsonplaceholder.typicode.com/v1',
+    });
   });
 
   it(`should perform a GET with versions decorator but for one scope`, async () => {
-    const apiClient = new ApiClient(new AxiosBaseApiClient(baseURL));
-    const axiosInstance = apiClient.baseClient.instance;
-    const mock = new MockAdapter(axiosInstance);
-
-    mock.onGet('/posts').reply(200, [{ id: 1, title: 'foo' }]);
-    mock.onPost('/posts').reply(201, { id: 1, title: 'foo' });
-    mock.onPut('/posts/1').reply(200, { id: 1, title: 'foo' });
-    mock.onDelete('/posts/1').reply(200, { id: 1, title: 'foo' });
-
+    const apiClient = new ApiClient(
+      new MockAxiosBaseApiClient(baseURL, {
+        get: { data: [{ id: 1, title: 'foo' }] },
+        post: { data: { id: 1, title: 'foo' } },
+        put: { data: { id: 1, title: 'foo' } },
+        delete: { data: { id: 1, title: 'foo' } },
+      }),
+    );
     apiClient.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
 
-    const responseGet = await apiClient.get({ url: '/posts' });
-    expect(responseGet.config.baseURL).toEqual(`${baseURL}/v1`);
+    await apiClient.get({ url: '/posts' });
 
-    const responseGet2 = await apiClient.without({ decorator: VersionDecorator }).get({ url: '/posts' });
-    expect(responseGet2.config.baseURL).toEqual(`${baseURL}`);
+    expect(apiClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {
+      baseURL: 'https://jsonplaceholder.typicode.com/v1',
+    });
 
-    const responseGet3 = await apiClient.get({ url: '/posts' });
-    expect(responseGet3.config.baseURL).toEqual(`${baseURL}/v1`);
+    const newClient = apiClient.without({ decorator: VersionDecorator });
+    await newClient.get({ url: '/posts' });
+
+    expect(newClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {});
+
+    await apiClient.get({ url: '/posts' });
+    expect(apiClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {
+      baseURL: 'https://jsonplaceholder.typicode.com/v1',
+    });
   });
 });
 
@@ -168,3 +172,10 @@ describe('test the decorator', () => {
     expect(logger).not.toHaveBeenCalled();
   });
 });
+
+// it(`should test the 'without' method from decorator`, async () => {
+//   const drink = jest.fn();
+//   ['lemon', 'octopus'].forEach((item) => drink(item));
+//   expect(drink).toHaveBeenCalledWith('lemon');
+//   expect(drink).toHaveBeenCalledWith('octopus');
+// });

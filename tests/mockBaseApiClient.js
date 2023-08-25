@@ -33,5 +33,3 @@ export class MockAxiosBaseApiClient {
     return this.instance.delete(url, { headers, params, ...otherOptions });
   }
 }
-
-it(`should perform 'all' method from decorator`, async () => {});

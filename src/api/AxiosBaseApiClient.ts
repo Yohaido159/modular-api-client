@@ -5,11 +5,6 @@ interface RequestOptions extends AxiosRequestConfig {
   data?: any;
 }
 
-interface IAxiosBaseApiClient {
-  baseURL: string;
-  instance: AxiosInstance;
-}
-
 export const createAxiosInstance = (baseURL: string): AxiosInstance => {
   return axios.create({ baseURL });
 };
