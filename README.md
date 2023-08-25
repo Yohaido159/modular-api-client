@@ -60,9 +60,7 @@ request headers: { 'X-Custom-Header': 'Custom Value' , Authorization: 'Bearar yo
 response: { userId: 1, name: 'John Doe' }
 ```
 
-## Available Decorators (short description)
-
-<!-- need list with bulitin decorators with short explanation list with bulit like <ul></ul> -->
+## Available Decorators
 
 - [VersionDecorator](#versiondecorator) - adds a version to the request URL
 - [JWTRefreshDecorator](#jwtrefreshdecorator) - if the JWT token is expired, refreshes it and retries the request
@@ -70,13 +68,15 @@ response: { userId: 1, name: 'John Doe' }
 - [AxiosDataDecorator](#axiosdatadecorator) - receives only the data from the response
 - [RetryDecorator](#retrydecorator) - retries the request if it fails
 
-## Advanced Usage
+# Advanced Usage
 
 ### Creating Custom Decorators
 
 Custom decorators allow you to extend the core functionality of the API client and encapsulate specific behavior related to logging, timing, authentication, headers, etc. By following the structure provided, you can create decorators that can be easily added or removed.
 
 #### Implementing a Basic Custom Decorator
+
+this example will apply the decorator to the GET method
 
 ```ts
 // retry.decorator.js
@@ -112,13 +112,14 @@ import { ApiClient, AxiosBaseApiClient } from 'modular-api-client';
 
 const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
 client.addDecorator({ decorator: RetryDecorator, params: { retries: 3, delay: 1000 } });
-// if failed, will retry 3 times with a 1 second delay between each attempt
 client.get({ url: '/users/1' }).then((response) => {
   console.log(response);
 });
 ```
 
 #### Implementing a Custom Decorator for all methods
+
+this example will apply the decorator to all methods
 
 ```ts
 export class RetryDecorator extends Decorator {
@@ -134,9 +135,44 @@ export class RetryDecorator extends Decorator {
     // ...
     }
 }
+
 ```
 
-## Available Decorators
+## Applying Decorators to Specific Scope
+
+### 'with' Method
+
+The `with` method allows you to apply decorators to a specific scope.
+
+#### Example
+
+```ts
+const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
+clien.get({ url: '/users/1' }); // -> https://api.example.com/users/1
+
+client.with({ decorator: VersionDecorator, params: { version: 'v1' } }).get({ url: '/users/1' }); // -> https://api.example.com/v1/users/1
+
+client.get({ url: '/users/1' }); // -> https://api.example.com/users/1
+```
+
+### 'without' Method
+
+The `without` method allows you to remove decorators from a specific scope.
+
+#### Example
+
+```ts
+const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
+client.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
+
+client.get({ url: '/users/1' }); // -> https://api.example.com/v1/users/1
+
+client.without(VersionDecorator).get({ url: '/users/1' }); // -> https://api.example.com/users/1
+
+client.get({ url: '/users/1' }); // -> https://api.example.com/v1/users/1
+```
+
+# Available Decorators API
 
 ### VersionDecorator
 
