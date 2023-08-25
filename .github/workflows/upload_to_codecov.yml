@@ -15,6 +15,7 @@ jobs:
         node-version: '14' # Set the Node.js version you want to use
     - name: Install dependencies
       run: npm install -D
+      
     - name: Run tests
       run: npm run coveralls
 
