@@ -1,6 +1,6 @@
 # Description
 
-This package provides a customizable API client equipped with a rich set of decorators that allow you to modify, extend, and manipulate the behavior of the client. Using TypeScript, the decorators can modify request headers, add authentication, log requests and responses, set versions, and more. The decorator pattern allows for great flexibility and clean code, and the classes and interfaces provided can be extended for even more functionality.
+This package offers a customizable API client using decorators, enabling the modification of request headers, addition of authentication, versioning, and more.
 
 # Installation
 
@@ -25,7 +25,7 @@ import {
   VersionDecorator,
   AuthenticationDecorator,
   HeaderDecorator,
-  DataDecorator,
+  AxiosDataDecorator,
 } from 'modular-api-client';
 ```
 
@@ -41,7 +41,7 @@ const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
 client.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
 client.addDecorator({ decorator: AuthenticationDecorator, params: { token: 'Bearar your-token-here' } });
 client.addDecorator({ decorator: HeaderDecorator, params: { 'X-Custom-Header': 'Custom Value' } });
-client.addDecorator({ decorator: DataDecorator });
+client.addDecorator({ decorator: AxiosDataDecorator });
 ```
 
 ### Making Requests
