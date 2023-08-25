@@ -218,9 +218,9 @@ Adds custom headers to the request.
 
 #### Parameters
 
-| Name      | Type   | Description                                                                   |
-| --------- | ------ | ----------------------------------------------------------------------------- |
-| <any-key> | string | The name of the header to add to the request. The value is added as a prefix. |
+| Name      | Type   | Description                                   |
+| --------- | ------ | --------------------------------------------- |
+| <any-key> | string | The name of the header to add to the request. |
 
 #### Example
 
