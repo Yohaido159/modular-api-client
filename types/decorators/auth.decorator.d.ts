@@ -1,4 +1,4 @@
-import { IApiClient, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+import { IApiClient, RequestOptions } from '../../src/allTypes';
 
 import { Decorator } from './base.decorator';
 export declare class AuthenticationDecorator extends Decorator {
@@ -9,5 +9,5 @@ export declare class AuthenticationDecorator extends Decorator {
       token: string;
     },
   );
-  all<T = any>(method: string, options: RequestOptions | PostOrPutOptions): Promise<T>;
+  all<T = any>(method: string, options: RequestOptions): Promise<T>;
 }

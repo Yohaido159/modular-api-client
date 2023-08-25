@@ -1,4 +1,5 @@
-import { DecoratorContainer, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+import { DecoratorContainer, RequestOptions } from '../../src/allTypes';
+
 export declare class ApiClient {
   private baseClient;
   private client;
@@ -13,7 +14,7 @@ export declare class ApiClient {
   with(decoratorContainer: DecoratorContainer): ApiClient;
   without(decoratorContainer: DecoratorContainer): ApiClient;
   get<T = any>(options: RequestOptions): Promise<T>;
-  post<T = any>(options: PostOrPutOptions): Promise<T>;
-  put<T = any>(options: PostOrPutOptions): Promise<T>;
+  post<T = any>(options: RequestOptions): Promise<T>;
+  put<T = any>(options: RequestOptions): Promise<T>;
   delete<T = any>(options: RequestOptions): Promise<T>;
 }

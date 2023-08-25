@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
-import { IApiClient, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+
+import { IApiClient, RequestMethods, RequestOptions } from '../allTypes';
 
 import { Decorator } from './base.decorator';
 
@@ -8,7 +9,7 @@ export class AxiosDataDecorator extends Decorator {
     super(apiClient);
   }
 
-  async all<T = any>(method: string, options: RequestOptions | PostOrPutOptions): Promise<T> {
+  async all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T> {
     return this.apiClient[method](options).then((response: AxiosResponse<T>) => response.data);
   }
 }

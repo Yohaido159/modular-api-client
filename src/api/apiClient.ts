@@ -1,4 +1,4 @@
-import { DecoratorContainer, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+import { DecoratorContainer, RequestOptions } from '../allTypes';
 
 export class ApiClient {
   private baseClient: any;
@@ -69,11 +69,11 @@ export class ApiClient {
     return this.client.get(options);
   }
 
-  post<T = any>(options: PostOrPutOptions): Promise<T> {
+  post<T = any>(options: RequestOptions): Promise<T> {
     return this.client.post(options);
   }
 
-  put<T = any>(options: PostOrPutOptions): Promise<T> {
+  put<T = any>(options: RequestOptions): Promise<T> {
     return this.client.put(options);
   }
 

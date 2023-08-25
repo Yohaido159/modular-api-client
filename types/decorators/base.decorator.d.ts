@@ -1,12 +1,12 @@
-import { IApiClient, IDecorator, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+import { IApiClient, IDecorator, RequestOptions } from '../../src/allTypes';
 export declare class Decorator implements IDecorator {
   protected apiClient: IApiClient;
   constructor(apiClient: IApiClient);
   isMethodDeclaredLocaly(method: string): boolean;
-  all<T = any>(method: string, options: RequestOptions | PostOrPutOptions): Promise<T>;
+  all<T = any>(method: string, options: RequestOptions): Promise<T>;
   get<T = any>(options: RequestOptions): Promise<T>;
-  post<T = any>(options: PostOrPutOptions): Promise<T>;
-  put<T = any>(options: PostOrPutOptions): Promise<T>;
+  post<T = any>(options: RequestOptions): Promise<T>;
+  put<T = any>(options: RequestOptions): Promise<T>;
   delete<T = any>(options: RequestOptions): Promise<T>;
   cleanup(): void;
 }

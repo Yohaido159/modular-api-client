@@ -1,4 +1,4 @@
-import { IApiClient, IDecorator, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+import { IApiClient, IDecorator, RequestMethods, RequestOptions } from '../allTypes';
 
 export class Decorator implements IDecorator {
   protected apiClient: IApiClient;
@@ -13,7 +13,7 @@ export class Decorator implements IDecorator {
     return this.constructor.prototype.hasOwnProperty(method);
   }
 
-  all<T = any>(method: string, options: RequestOptions | PostOrPutOptions): Promise<T> {
+  all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T> {
     return this.apiClient[method](options);
   }
 
@@ -27,7 +27,7 @@ export class Decorator implements IDecorator {
     }
   }
 
-  post<T = any>(options: PostOrPutOptions): Promise<T> {
+  post<T = any>(options: RequestOptions): Promise<T> {
     if (this.isMethodDeclaredLocaly('post')) {
       return this.post(options);
     } else if (this.isMethodDeclaredLocaly('all')) {
@@ -37,7 +37,7 @@ export class Decorator implements IDecorator {
     }
   }
 
-  put<T = any>(options: PostOrPutOptions): Promise<T> {
+  put<T = any>(options: RequestOptions): Promise<T> {
     if (this.isMethodDeclaredLocaly('put')) {
       return this.put(options);
     } else if (this.isMethodDeclaredLocaly('all')) {

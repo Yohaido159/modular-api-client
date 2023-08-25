@@ -1,24 +1,24 @@
-import { IApiClient, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+import { IApiClient, IAxiosBaseApiClient, RequestMethods, RequestOptions } from '../allTypes';
 
 import { Decorator } from './base.decorator';
 
 export class VersionDecorator extends Decorator {
   private version: string;
-  private baseClient: IApiClient;
+  private baseClient: IAxiosBaseApiClient;
 
   constructor(
     apiClient: IApiClient,
     params: {
       version: string;
     },
-    baseClient: IApiClient,
+    baseClient: IAxiosBaseApiClient,
   ) {
     super(apiClient);
     this.version = params.version;
     this.baseClient = baseClient;
   }
 
-  all<T = any>(method: string, options: RequestOptions | PostOrPutOptions): Promise<T> {
+  all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T> {
     return this.apiClient[method]({ ...options, baseURL: `${this.baseClient.baseURL}/${this.version}` });
   }
 }

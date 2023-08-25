@@ -22,5 +22,5 @@
     "noEmit": true,
     "declaration": true
   },
-  "include": ["src", "types"]
+  "include": ["src", "types", "src/allTypes.ts"]
 }

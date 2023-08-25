@@ -1,4 +1,4 @@
-import { IApiClient, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+import { IApiClient, RequestMethods, RequestOptions } from '../allTypes';
 
 import { Decorator } from './base.decorator';
 
@@ -10,7 +10,7 @@ export class HeadersDecorator extends Decorator {
     this.headers = params;
   }
 
-  async all<T = any>(method: string, options: RequestOptions | PostOrPutOptions): Promise<T> {
+  async all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T> {
     return this.apiClient[method]({
       ...options,
       headers: {

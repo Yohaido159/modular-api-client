@@ -1,4 +1,4 @@
-import { IApiClient, IAxiosBaseApiClient } from 'modular-api-client';
+import { IApiClient, IAxiosBaseApiClient } from '../allTypes';
 
 import { Decorator } from './base.decorator';
 

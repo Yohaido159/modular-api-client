@@ -1,5 +1,3 @@
-import { IApiClient, PostOrPutOptions, RequestOptions } from 'modular-api-client';
-
 import { Decorator } from './base.decorator';
 export declare class VersionDecorator extends Decorator {
   private version;
@@ -11,5 +9,5 @@ export declare class VersionDecorator extends Decorator {
     },
     baseClient: IApiClient,
   );
-  all<T = any>(method: string, options: RequestOptions | PostOrPutOptions): Promise<T>;
+  all<T = any>(method: string, options: RequestOptions): Promise<T>;
 }
