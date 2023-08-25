@@ -1,4 +1,6 @@
-# Description
+# Modular API Client
+
+[![coverage](https://codecov.io/gh/Yohaido159/modular-api-client/branch/master/graph/badge.svg)](https://codecov.io/gh/Yohaido159/modular-api-client)
 
 This package offers a customizable API client using decorators, enabling the modification of request headers, addition of authentication, versioning, and more.
 
