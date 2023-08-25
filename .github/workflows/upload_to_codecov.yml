@@ -7,6 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Test Coverage
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Set the Node.js version you want to use
     - name: Install dependencies
       run: npm install -D
     - name: Run tests
