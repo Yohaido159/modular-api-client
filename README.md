@@ -150,11 +150,14 @@ The `with` method allows you to apply decorators to a specific scope.
 
 ```ts
 const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
-clien.get({ url: '/users/1' }); // -> https://api.example.com/users/1
+clien.get({ url: '/users/1' });
+// -> https://api.example.com/users/1
 
-client.with({ decorator: VersionDecorator, params: { version: 'v1' } }).get({ url: '/users/1' }); // -> https://api.example.com/v1/users/1
+client.with({ decorator: VersionDecorator, params: { version: 'v1' } }).get({ url: '/users/1' });
+// -> https://api.example.com/v1/users/1
 
-client.get({ url: '/users/1' }); // -> https://api.example.com/users/1
+client.get({ url: '/users/1' });
+// -> https://api.example.com/users/1
 ```
 
 ### 'without' Method
@@ -167,11 +170,14 @@ The `without` method allows you to remove decorators from a specific scope.
 const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
 client.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
 
-client.get({ url: '/users/1' }); // -> https://api.example.com/v1/users/1
+client.get({ url: '/users/1' });
+// -> https://api.example.com/v1/users/1
 
-client.without({ decorator: VersionDecorator }).get({ url: '/users/1' }); // -> https://api.example.com/users/1
+client.without({ decorator: VersionDecorator }).get({ url: '/users/1' });
+// -> https://api.example.com/users/1
 
-client.get({ url: '/users/1' }); // -> https://api.example.com/v1/users/1
+client.get({ url: '/users/1' });
+// -> https://api.example.com/v1/users/1
 ```
 
 # Available Decorators API
