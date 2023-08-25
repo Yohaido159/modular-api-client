@@ -169,7 +169,7 @@ client.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
 
 client.get({ url: '/users/1' }); // -> https://api.example.com/v1/users/1
 
-client.without(VersionDecorator).get({ url: '/users/1' }); // -> https://api.example.com/users/1
+client.without({ decorator: VersionDecorator }).get({ url: '/users/1' }); // -> https://api.example.com/users/1
 
 client.get({ url: '/users/1' }); // -> https://api.example.com/v1/users/1
 ```
