@@ -1,6 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 
-import { AxiosBaseApiClient, createAxiosInstance } from '../AxiosBaseApiClient';
+import { AxiosBaseApiClient, createAxiosInstance } from '../src/api/AxiosBaseApiClient';
 
 describe('AxiosBaseApiClient', () => {
   const baseURL = 'https://jsonplaceholder.typicode.com';

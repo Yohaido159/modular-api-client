@@ -1,3 +1,5 @@
+import { IApiClient, IDecorator, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+
 export class Decorator implements IDecorator {
   protected apiClient: IApiClient;
 
@@ -16,40 +18,40 @@ export class Decorator implements IDecorator {
   }
 
   get<T = any>(options: RequestOptions): Promise<T> {
-    if (this.isMethodDeclaredLocaly("get")) {
+    if (this.isMethodDeclaredLocaly('get')) {
       return this.get(options);
-    } else if (this.isMethodDeclaredLocaly("all")) {
-      return this.all("get", options);
+    } else if (this.isMethodDeclaredLocaly('all')) {
+      return this.all('get', options);
     } else {
       return this.apiClient.get(options);
     }
   }
 
   post<T = any>(options: PostOrPutOptions): Promise<T> {
-    if (this.isMethodDeclaredLocaly("post")) {
+    if (this.isMethodDeclaredLocaly('post')) {
       return this.post(options);
-    } else if (this.isMethodDeclaredLocaly("all")) {
-      return this.all("post", options);
+    } else if (this.isMethodDeclaredLocaly('all')) {
+      return this.all('post', options);
     } else {
       return this.apiClient.post(options);
     }
   }
 
   put<T = any>(options: PostOrPutOptions): Promise<T> {
-    if (this.isMethodDeclaredLocaly("put")) {
+    if (this.isMethodDeclaredLocaly('put')) {
       return this.put(options);
-    } else if (this.isMethodDeclaredLocaly("all")) {
-      return this.all("put", options);
+    } else if (this.isMethodDeclaredLocaly('all')) {
+      return this.all('put', options);
     } else {
       return this.apiClient.put(options);
     }
   }
 
   delete<T = any>(options: RequestOptions): Promise<T> {
-    if (this.isMethodDeclaredLocaly("delete")) {
+    if (this.isMethodDeclaredLocaly('delete')) {
       return this.delete(options);
-    } else if (this.isMethodDeclaredLocaly("all")) {
-      return this.all("delete", options);
+    } else if (this.isMethodDeclaredLocaly('all')) {
+      return this.all('delete', options);
     } else {
       return this.apiClient.delete(options);
     }

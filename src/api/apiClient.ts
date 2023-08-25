@@ -1,3 +1,5 @@
+import { DecoratorContainer, PostOrPutOptions, RequestOptions } from 'modular-api-client';
+
 export class ApiClient {
   private baseClient: any;
   private client: any;
