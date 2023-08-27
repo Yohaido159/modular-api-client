@@ -1,6 +1,6 @@
 {
   "name": "modular-api-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "directories": {
@@ -27,7 +27,9 @@
     "test": "jest --watch",
     "codecov": "codecov",
     "coveralls": "jest --coverage",
-    "watch": "babel --extensions .ts,.js src --out-dir dist --watch"
+    "watch": "babel --extensions .ts,.js src --out-dir dist --watch",
+    "publish": "npm run build && npm publish",
+    "build": "babel --extensions .ts,.js src --out-dir dist"
   },
   "repository": {
     "type": "git",
