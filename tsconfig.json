@@ -4,7 +4,7 @@
     "paths": {
       "@*": ["src/*"]
     },
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,7 +20,8 @@
     "isolatedModules": false,
     "strictNullChecks": true,
     "noEmit": true,
-    "declaration": true
+    "declaration": true,
+    "typeRoots": ["node_modules/@types", "types"]
   },
-  "include": ["src", "types", "src/allTypes.ts"]
+  "include": ["src", "src/allTypes.ts"]
 }

@@ -2,7 +2,7 @@
   "name": "modular-api-client",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "directories": {
     "lib": "lib",
     "test": "tests"
@@ -22,11 +22,12 @@
     "requests",
     "responses"
   ],
-  "typings": "./src/index.d.ts",
+  "typings": "./types/index.d.ts",
   "scripts": {
     "test": "jest --watch",
     "codecov": "codecov",
-    "coveralls": "jest --coverage"
+    "coveralls": "jest --coverage",
+    "watch": "babel --extensions .ts,.js src --out-dir dist --watch"
   },
   "repository": {
     "type": "git",
