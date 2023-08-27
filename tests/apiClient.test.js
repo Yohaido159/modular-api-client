@@ -1,6 +1,7 @@
 import { ApiClient } from '../src/api/apiClient';
 import { AuthenticationDecorator } from '../src/decorators/auth.decorator';
 import { AxiosDataDecorator } from '../src/decorators/data.decorator';
+import { HeadersDecorator } from '../src/decorators/headers.decorator';
 import { LoggerDecorator } from '../src/decorators/logger.decorator';
 import { VersionDecorator } from '../src/decorators/version.decorator';
 
@@ -171,11 +172,24 @@ describe('test the decorator', () => {
     expect(apiClient.baseClient.instance.interceptors.request.eject).toHaveBeenCalled();
     expect(logger).not.toHaveBeenCalled();
   });
-});
 
-// it(`should test the 'without' method from decorator`, async () => {
-//   const drink = jest.fn();
-//   ['lemon', 'octopus'].forEach((item) => drink(item));
-//   expect(drink).toHaveBeenCalledWith('lemon');
-//   expect(drink).toHaveBeenCalledWith('octopus');
-// });
+  it.only(`should test the 'HeaderDecorator'`, async () => {
+    const apiClient = new ApiClient(
+      new MockAxiosBaseApiClient(baseURL, {
+        get: { data: [{ id: 1, title: 'foo' }] },
+      }),
+    );
+
+    const logger = jest.fn();
+    apiClient.addDecorator({
+      decorator: HeadersDecorator,
+      params: {
+        'X-Test': 'test',
+      },
+    });
+
+    apiClient.get({ url: '/posts' });
+    // expect(apiClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {});
+    expect(apiClient.baseClient.instance.defaults.headers.common['X-Test']).toEqual('test');
+  });
+});

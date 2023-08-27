@@ -1,7 +1,7 @@
 import { DecoratorContainer, RequestOptions } from '../allTypes';
 
 export class ApiClient {
-  private baseClient: any;
+  baseClient: any;
   private client: any;
   private decorators: DecoratorContainer[] = [];
 

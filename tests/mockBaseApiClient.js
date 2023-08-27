@@ -10,6 +10,16 @@ export class MockAxiosBaseApiClient {
         request: { use: jest.fn(), eject: jest.fn() },
         response: { use: jest.fn(), eject: jest.fn() },
       },
+      defaults: {
+        headers: {
+          common: {},
+          get: {},
+          post: {},
+          put: {},
+          patch: {},
+          delete: {},
+        },
+      },
     };
   }
 
