@@ -23,7 +23,6 @@ export class JWTRefreshDecorator extends Decorator {
 
   async all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T> {
     try {
-      console.log('JWTRefreshDecorator.all');
       return await this.apiClient[method](options);
     } catch (error) {
       const err = error as AxiosError;
