@@ -2,7 +2,7 @@ import { IApiClient, RequestMethods, RequestOptions } from '../allTypes';
 
 import { Decorator } from './base.decorator';
 
-export class HeadersDecorator extends Decorator {
+export class AxiosHeadersDecorator extends Decorator {
   private baseClient: any;
   private initalHeaders: object;
 

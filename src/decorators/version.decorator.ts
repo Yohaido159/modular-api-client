@@ -2,7 +2,7 @@ import { IApiClient, IAxiosBaseApiClient, RequestMethods, RequestOptions } from 
 
 import { Decorator } from './base.decorator';
 
-export class VersionDecorator extends Decorator {
+export class AxiosVersionDecorator extends Decorator {
   private version: string;
   private baseClient: IAxiosBaseApiClient;
 

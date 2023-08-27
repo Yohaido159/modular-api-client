@@ -1,8 +1,9 @@
-import { IApiClient, RequestOptions } from '../../src/allTypes';
-
+import { IApiClient, RequestMethods, RequestOptions } from '../allTypes';
 import { Decorator } from './base.decorator';
-export declare class HeadersDecorator extends Decorator {
-  private headers;
-  constructor(apiClient: IApiClient, params: object);
-  all<T = any>(method: string, options: RequestOptions): Promise<T>;
+export declare class AxiosHeadersDecorator extends Decorator {
+    private baseClient;
+    private initalHeaders;
+    constructor(apiClient: IApiClient, params: object, baseClient: any);
+    all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T>;
+    cleanup(): void;
 }
