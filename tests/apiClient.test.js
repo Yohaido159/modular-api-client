@@ -118,17 +118,17 @@ describe('test the decorator', () => {
     );
 
     apiClient.addDecorator({ decorator: AxiosVersionDecorator, params: { version: 'v2' } });
-    apiClient.addDecorator({ decorator: AuthenticationDecorator, params: { token: 'Bearer 1233123' } });
+    apiClient.addDecorator({ decorator: AxiosHeadersDecorator, params: { Authorization: 'Bearer 1233123' } });
     apiClient.addDecorator({ decorator: AxiosDataDecorator });
 
     const responseGet = await apiClient.get({ url: '/posts' });
     expect(apiClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {
       baseURL: 'https://jsonplaceholder.typicode.com/v2',
-      headers: {
-        Authorization: 'Bearer 1233123',
-      },
     });
     expect(responseGet).toEqual([{ id: 1, title: 'foo' }]);
+    expect(apiClient.baseClient.instance.defaults.headers.common).toEqual({
+      Authorization: 'Bearer 1233123',
+    });
     expect(apiClient.baseClient.instance.get).toHaveBeenCalledTimes(1);
   });
 
@@ -172,7 +172,7 @@ describe('test the decorator', () => {
     expect(logger).not.toHaveBeenCalled();
   });
 
-  it.only(`should test the 'AxiosHeadersDecorator'`, async () => {
+  it(`should test the 'AxiosHeadersDecorator'`, async () => {
     const apiClient = new ApiClient(
       new MockAxiosBaseApiClient(baseURL, {
         get: { data: [{ id: 1, title: 'foo' }] },
