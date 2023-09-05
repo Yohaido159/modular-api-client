@@ -245,7 +245,7 @@ None
 #### Example
 
 ```ts
-client.addDecorator({ decorator: DataDecorator });
+client.addDecorator({ decorator: AxiosDataDecorator });
 ```
 
 ---
