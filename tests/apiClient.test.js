@@ -1,9 +1,8 @@
 import { ApiClient } from '../src/api/apiClient';
-import { AuthenticationDecorator } from '../src/decorators/auth.decorator';
 import { AxiosDataDecorator } from '../src/decorators/data.decorator';
-import { HeadersDecorator } from '../src/decorators/headers.decorator';
+import { AxiosHeadersDecorator } from '../src/decorators/headers.decorator';
 import { LoggerDecorator } from '../src/decorators/logger.decorator';
-import { VersionDecorator } from '../src/decorators/version.decorator';
+import { AxiosVersionDecorator } from '../src/decorators/version.decorator';
 
 import { MockAxiosBaseApiClient } from './mockBaseApiClient';
 
@@ -70,7 +69,7 @@ describe('ApiClient', () => {
         delete: { data: { id: 1, title: 'foo' } },
       }),
     );
-    apiClient.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
+    apiClient.addDecorator({ decorator: AxiosVersionDecorator, params: { version: 'v1' } });
 
     await apiClient.get({ url: '/posts' });
     expect(apiClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {
@@ -87,7 +86,7 @@ describe('ApiClient', () => {
         delete: { data: { id: 1, title: 'foo' } },
       }),
     );
-    apiClient.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
+    apiClient.addDecorator({ decorator: AxiosVersionDecorator, params: { version: 'v1' } });
 
     await apiClient.get({ url: '/posts' });
 
@@ -95,7 +94,7 @@ describe('ApiClient', () => {
       baseURL: 'https://jsonplaceholder.typicode.com/v1',
     });
 
-    const newClient = apiClient.without({ decorator: VersionDecorator });
+    const newClient = apiClient.without({ decorator: AxiosVersionDecorator });
     await newClient.get({ url: '/posts' });
 
     expect(newClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {});
@@ -118,7 +117,7 @@ describe('test the decorator', () => {
       }),
     );
 
-    apiClient.addDecorator({ decorator: VersionDecorator, params: { version: 'v2' } });
+    apiClient.addDecorator({ decorator: AxiosVersionDecorator, params: { version: 'v2' } });
     apiClient.addDecorator({ decorator: AuthenticationDecorator, params: { token: 'Bearer 1233123' } });
     apiClient.addDecorator({ decorator: AxiosDataDecorator });
 
@@ -145,7 +144,7 @@ describe('test the decorator', () => {
 
     const logger = jest.fn();
     apiClient.addDecorator({ decorator: LoggerDecorator, params: { logger } });
-    apiClient.addDecorator({ decorator: VersionDecorator, params: { version: 'v2' } });
+    apiClient.addDecorator({ decorator: AxiosVersionDecorator, params: { version: 'v2' } });
 
     expect(apiClient.baseClient.instance.interceptors.request.use).toHaveBeenCalled();
     expect(apiClient.baseClient.instance.interceptors.request.use).toHaveBeenCalledTimes(1);
@@ -173,7 +172,7 @@ describe('test the decorator', () => {
     expect(logger).not.toHaveBeenCalled();
   });
 
-  it.only(`should test the 'HeaderDecorator'`, async () => {
+  it.only(`should test the 'AxiosHeadersDecorator'`, async () => {
     const apiClient = new ApiClient(
       new MockAxiosBaseApiClient(baseURL, {
         get: { data: [{ id: 1, title: 'foo' }] },
@@ -182,14 +181,13 @@ describe('test the decorator', () => {
 
     const logger = jest.fn();
     apiClient.addDecorator({
-      decorator: HeadersDecorator,
+      decorator: AxiosHeadersDecorator,
       params: {
         'X-Test': 'test',
       },
     });
 
     apiClient.get({ url: '/posts' });
-    // expect(apiClient.baseClient.instance.get).toHaveBeenCalledWith('/posts', {});
     expect(apiClient.baseClient.instance.defaults.headers.common['X-Test']).toEqual('test');
   });
 });

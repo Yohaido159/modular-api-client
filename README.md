@@ -24,9 +24,8 @@ Here's an example of how you might use the package in your code:
 import {
   ApiClient,
   AxiosBaseApiClient,
-  VersionDecorator,
-  AuthenticationDecorator,
-  HeaderDecorator,
+  AxiosVersionDecorator,
+  AxiosHeadersDecorator,
   AxiosDataDecorator,
 } from 'modular-api-client';
 ```
@@ -40,9 +39,8 @@ const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
 ### Adding Decorators
 
 ```ts
-client.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
-client.addDecorator({ decorator: AuthenticationDecorator, params: { token: 'Bearar your-token-here' } });
-client.addDecorator({ decorator: HeaderDecorator, params: { 'X-Custom-Header': 'Custom Value' } });
+client.addDecorator({ decorator: AxiosVersionDecorator, params: { version: 'v1' } });
+client.addDecorator({ decorator: AxiosHeadersDecorator, params: { 'X-Custom-Header': 'Custom Value' } });
 client.addDecorator({ decorator: AxiosDataDecorator });
 ```
 
@@ -58,15 +56,15 @@ client.get({ url: '/users/1' }).then((response) => {
 
 ```
 request url: https://api.example.com/v1/users/1
-request headers: { 'X-Custom-Header': 'Custom Value' , Authorization: 'Bearar your-token-here' }
+request headers: { 'X-Custom-Header': 'Custom Value' }
 response: { userId: 1, name: 'John Doe' }
 ```
 
 ## Available Decorators
 
-- [VersionDecorator](#versiondecorator) - adds a version to the request URL
+- [AxiosVersionDecorator](#versiondecorator) - adds a version to the request URL
 - [JWTRefreshDecorator](#jwtrefreshdecorator) - if the JWT token is expired, refreshes it and retries the request
-- [HeaderDecorator](#headerdecorator) - adds custom headers to the request
+- [AxiosHeadersDecorator](#headerdecorator) - adds custom headers to the request
 - [AxiosDataDecorator](#axiosdatadecorator) - receives only the data from the response
 - [RetryDecorator](#retrydecorator) - retries the request if it fails
 
@@ -153,7 +151,7 @@ const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
 clien.get({ url: '/users/1' });
 // -> https://api.example.com/users/1
 
-client.with({ decorator: VersionDecorator, params: { version: 'v1' } }).get({ url: '/users/1' });
+client.with({ decorator: AxiosVersionDecorator, params: { version: 'v1' } }).get({ url: '/users/1' });
 // -> https://api.example.com/v1/users/1
 
 client.get({ url: '/users/1' });
@@ -168,12 +166,12 @@ The `without` method allows you to remove decorators from a specific scope.
 
 ```ts
 const client = new ApiClient(new AxiosBaseApiClient('https://api.example.com'));
-client.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
+client.addDecorator({ decorator: AxiosVersionDecorator, params: { version: 'v1' } });
 
 client.get({ url: '/users/1' });
 // -> https://api.example.com/v1/users/1
 
-client.without({ decorator: VersionDecorator }).get({ url: '/users/1' });
+client.without({ decorator: AxiosVersionDecorator }).get({ url: '/users/1' });
 // -> https://api.example.com/users/1
 
 client.get({ url: '/users/1' });
@@ -182,7 +180,7 @@ client.get({ url: '/users/1' });
 
 # Available Decorators API
 
-### VersionDecorator
+### AxiosVersionDecorator
 
 Adds a version to the request URL.
 
@@ -195,7 +193,7 @@ Adds a version to the request URL.
 #### Example
 
 ```ts
-client.addDecorator({ decorator: VersionDecorator, params: { version: 'v1' } });
+client.addDecorator({ decorator: AxiosVersionDecorator, params: { version: 'v1' } });
 ```
 
 ---
@@ -218,7 +216,7 @@ client.addDecorator({ decorator: JWTRefreshDecorator, params: { refreshCallback:
 
 ---
 
-### HeaderDecorator
+### AxiosHeadersDecorator
 
 Adds custom headers to the request.
 
@@ -231,7 +229,7 @@ Adds custom headers to the request.
 #### Example
 
 ```ts
-client.addDecorator({ decorator: HeaderDecorator, params: { 'X-Custom-Header': 'Custom Value' } });
+client.addDecorator({ decorator: AxiosHeadersDecorator, params: { 'X-Custom-Header': 'Custom Value' } });
 ```
 
 ---
