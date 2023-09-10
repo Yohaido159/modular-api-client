@@ -33,7 +33,7 @@ export class ApiClient {
 
   findDecorator<T>(decoratorContainer: DecoratorContainer): DecoratorContainer<T> | undefined {
     return this.decorators.find((dec) => {
-      return dec.decorator === decoratorContainer.decorator;
+      return dec.decorator === decoratorContainer.decorator && dec.params === decoratorContainer.params;
     });
   }
 
