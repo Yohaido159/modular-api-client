@@ -4,3 +4,4 @@ export declare class AxiosDataDecorator extends Decorator {
     constructor(apiClient: IApiClient);
     all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T>;
 }
+//# sourceMappingURL=data.decorator.d.ts.map

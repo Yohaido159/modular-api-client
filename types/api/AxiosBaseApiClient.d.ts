@@ -14,3 +14,4 @@ export declare class AxiosBaseApiClient {
     delete(options: RequestOptions): Promise<AxiosResponse>;
 }
 export {};
+//# sourceMappingURL=AxiosBaseApiClient.d.ts.map

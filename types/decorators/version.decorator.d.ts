@@ -8,3 +8,4 @@ export declare class AxiosVersionDecorator extends Decorator {
     }, baseClient: IAxiosBaseApiClient);
     all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T>;
 }
+//# sourceMappingURL=version.decorator.d.ts.map

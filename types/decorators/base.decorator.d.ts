@@ -10,3 +10,4 @@ export declare class Decorator implements IDecorator {
     delete<T = any>(options: RequestOptions): Promise<T>;
     cleanup(): void;
 }
+//# sourceMappingURL=base.decorator.d.ts.map

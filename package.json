@@ -29,7 +29,8 @@
     "coveralls": "jest --coverage",
     "watch": "babel --extensions .ts,.js src --out-dir dist --watch",
     "publish": "npm run build && npm publish",
-    "build": "babel --extensions .ts,.js src --out-dir dist"
+    "build": "babel --extensions .ts,.js src --out-dir dist",
+    "genType": "tsc --declaration --emitDeclarationOnly --declarationMap --allowJs --emitDecoratorMetadata --experimentalDecorators --moduleResolution node --outDir types --target es6 src/index.ts"
   },
   "repository": {
     "type": "git",

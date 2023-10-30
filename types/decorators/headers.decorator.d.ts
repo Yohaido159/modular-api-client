@@ -7,3 +7,4 @@ export declare class AxiosHeadersDecorator extends Decorator {
     all<T = any>(method: RequestMethods, options: RequestOptions): Promise<T>;
     cleanup(): void;
 }
+//# sourceMappingURL=headers.decorator.d.ts.map
