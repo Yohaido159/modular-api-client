@@ -1,14 +1,16 @@
-import { DecoratorContainer, RequestOptions } from '../allTypes';
+import { FuncDecoratorContainer, DecoratorContainer, RequestOptions } from '../allTypes';
 
 export class ApiClient {
   baseClient: any;
   private client: any;
   private decorators: DecoratorContainer[] = [];
+  private lazyDecorators: FuncDecoratorContainer[] = [];
 
   constructor(baseClient: any) {
     this.baseClient = baseClient;
     this.client = this.baseClient;
     this.decorators = [];
+    this.lazyDecorators = [];
   }
 
   applyDecorators() {
@@ -29,6 +31,10 @@ export class ApiClient {
   addDecorator<T>(decoratorContainer: DecoratorContainer<T>) {
     this.decorators.push(decoratorContainer);
     this.applyDecorator(decoratorContainer);
+  }
+
+  addLazyDecorator<T>(FuncdecoratorContainer: () => DecoratorContainer<T>) {
+    this.lazyDecorators.push(FuncdecoratorContainer);
   }
 
   findDecorator<T>(decoratorContainer: DecoratorContainer): DecoratorContainer<T> | undefined {
@@ -65,19 +71,34 @@ export class ApiClient {
     return clone;
   }
 
+  getLazyClient = () => {
+    const lazyDecorators = this.lazyDecorators;
+    let newClient = this.client;
+    for (const lazyDecorator of lazyDecorators) {
+      const decoratorObject = lazyDecorator();
+      newClient = new decoratorObject.decorator(newClient, decoratorObject.params || {}, this.baseClient);
+      decoratorObject.decoratorInstance = newClient;
+    }
+    return newClient;
+  };
+
   get<T = any>(options: RequestOptions): Promise<T> {
-    return this.client.get(options);
+    const lazyClient = this.getLazyClient();
+    return lazyClient.get(options);
   }
 
   post<T = any>(options: RequestOptions): Promise<T> {
-    return this.client.post(options);
+    const lazyClient = this.getLazyClient();
+    return lazyClient.post(options);
   }
 
   put<T = any>(options: RequestOptions): Promise<T> {
-    return this.client.put(options);
+    const lazyClient = this.getLazyClient();
+    return lazyClient.put(options);
   }
 
   delete<T = any>(options: RequestOptions): Promise<T> {
-    return this.client.delete(options);
+    const lazyClient = this.getLazyClient();
+    return lazyClient.delete(options);
   }
 }

@@ -47,3 +47,5 @@ export type DecoratorContainer<T = any> = {
   decoratorInstance?: any;
   params?: T;
 };
+
+export type FuncDecoratorContainer<T = any> = () => DecoratorContainer<T>;
